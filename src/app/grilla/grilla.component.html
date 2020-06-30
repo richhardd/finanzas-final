@@ -1,0 +1,195 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <h1>Calculo del bono</h1>
+  </div>
+  <div class="row justify-content-start">
+    <h2>datos iniciales</h2>
+  </div>
+  <form>
+    <div class="row justify-content-center">
+      <div class="input-group input-group-sm mb-3 col-2">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="valorNominal">Valor nominal</span>
+        </div>
+        <input
+          #valorNominal
+          type="text"
+          class="form-control"
+          (blur)="getValorNominal(valorNominal.value)"
+        />
+      </div>
+      <div class="input-group input-group-sm mb-3 col-4">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="tasaCupon"
+            >Tasa Efectiva Cupon (%)</span
+          >
+        </div>
+        <input
+          #tasaCupon
+          type="text"
+          class="form-control"
+          (blur)="getTasaCupon(tasaCupon.value)"
+        />
+        <select class="custom-select custom-select-sm col-3">
+          <option selected></option>
+          <option value="1">TEA</option>
+          <option value="2">TNA</option>
+        </select>
+      </div>
+      <select class="custom-select custom-select-sm col-2">
+        <option selected>Frecuencia</option>
+        <option value="12">Mensual</option>
+        <option value="6">Bimestral</option>
+        <option value="4">Trimestral</option>
+        <option value="3">Cuatrimestral</option>
+        <option value="2">Semestral</option>
+        <option value="1">Anual</option>
+      </select>
+    </div>
+    <div class="row justify-content-center">
+      <div class="input-group input-group-sm mb-3 col-2">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="plazo">Plazo (años)</span>
+        </div>
+        <input
+          #plazo
+          type="text"
+          class="form-control"
+          (blur)="getPlazo(plazo.value)"
+        />
+      </div>
+      <div class="input-group input-group-sm mb-3 col-4">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="tasaMercado"
+            >Tasa Efectiva Mercado (%)</span
+          >
+        </div>
+        <input
+          #tasaMercado
+          type="text"
+          class="form-control col-3"
+          (blur)="getTasaMercado(tasaMercado.value)"
+        />
+        <select class="custom-select custom-select-sm col-3">
+          <option selected></option>
+          <option value="1">TEA</option>
+          <option value="2">TNA</option>
+        </select>
+      </div>
+      <div class="input-group input-group-sm mb-3 col-2">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="primaredencion"
+            >Prima Red. (%)</span
+          >
+        </div>
+        <input
+          #primaRedencion
+          type="text"
+          class="form-control"
+          (blur)="getPrimaRedencion(primaRedencion.value)"
+        />
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="input-group input-group-sm mb-3 col-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="estructuracion"
+            >Estructuracion (%)</span
+          >
+        </div>
+        <input
+          #estructuracion
+          type="text"
+          class="form-control"
+          (blur)="getEstructuracion(estructuracion.value)"
+        />
+      </div>
+      <div class="input-group input-group-sm mb-3 col-2">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="colocacion">Colocacion (%)</span>
+        </div>
+        <input
+          #colocacion
+          type="text"
+          class="form-control"
+          (blur)="getColocacion(colocacion.value)"
+        />
+      </div>
+
+      <div class="input-group input-group-sm mb-3 col-2">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="flotacion">flotacion (%)</span>
+        </div>
+        <input
+          #flotacion
+          type="text"
+          class="form-control"
+          (blur)="getFlotacion(flotacion.value)"
+        />
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-1"></div>
+      <div class="input-group input-group-sm mb-3 col-2">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="cavali">Cavali (%)</span>
+        </div>
+        <input
+          #cavali
+          type="text"
+          class="form-control"
+          (blur)="getCavali(cavali.value)"
+        />
+      </div>
+      <div class="col-1"></div>
+
+      <select
+        id="metodo"
+        onselect="getMetodo"
+        class="custom-select custom-select-sm col-2"
+      >
+        <option selected>Metodo</option>
+        <option>Americano</option>
+        <option value="2">Aleman</option>
+        <option value="3">Frances</option>
+      </select>
+      <div class="col-1"></div>
+      <button type="button" class="btn btn-light col-1" (click)="calculos()">
+        Calcular
+      </button>
+    </div>
+  </form>
+  <div class="row justify-content-start">
+    <h2>datos utiles</h2>
+  </div>
+  <div class="row justify-content-center">
+    <ul class="list-group-sm col-3">
+      <li class="list-group-item">TE Periodo bono</li>
+      <li class="list-group-item">TE Periodo mercado</li>
+      <li class="list-group-item">Gasto bonista</li>
+      <li class="list-group-item">Gasto emisor</li>
+    </ul>
+
+    <ul class="list-group-sm col-1">
+      <li class="list-group-item">{{ TEPb }}</li>
+      <li class="list-group-item">{{ TEPm }}</li>
+      <li class="list-group-item">{{ gastoB }}</li>
+      <li class="list-group-item">{{ gastoE }}</li>
+    </ul>
+  </div>
+
+  <div class="row justify-content-start">
+    <h2>tabla de calculos</h2>
+  </div>
+
+  <div class="row justify-content-center">
+    <ag-grid-angular
+      style="width: 1000px; height: 200px;"
+      class="ag-theme-balham"
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+    >
+    </ag-grid-angular>
+  </div>
+</div>
