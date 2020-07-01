@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { pow } from '../../../node_modules/math-power';
+import { element } from 'protractor';
 @Component({
   selector: 'app-grilla',
   templateUrl: './grilla.component.html',
@@ -53,8 +54,9 @@ export class GrillaComponent implements OnInit {
   getTasaTipoMercado(e) {
     this.tasaTipoMercado = e;
   }
-  getMetodo(value) {
-    this.metodoEscogido = value;
+  getMetodo(e) {
+    this.metodoEscogido = e;
+    console.log(e);
   }
   getValorNominal(value) {
     console.log(value);
@@ -100,11 +102,32 @@ export class GrillaComponent implements OnInit {
       Number(this.cavali) +
       Number(this.colocacion) +
       Number(this.estructuracion);
-    this.calcularTasaPerioso();
-    this.calcularTabla();
+
+    this.calcularTasaPeriodo();
+    this.calcularTablaAmericano();
+
+    switch (this.metodoEscogido) {
+      case '1': {
+        //americano
+
+        break;
+      }
+      case '2': {
+        //aleman
+        break;
+      }
+      case '2': {
+        //frances
+        break;
+      }
+      default: {
+        //statements;
+        break;
+      }
+    }
   }
 
-  calcularTasaPerioso() {
+  calcularTasaPeriodo() {
     if (this.tasaTipoBono == 1) {
       let val =
         (Math.pow(
@@ -145,17 +168,68 @@ export class GrillaComponent implements OnInit {
     }
   }
 
-  calcularTabla() {
+  calcularTablaAmericano() {
     let totalTiempo = Number(this.frecuencia) * Number(this.plazo);
+    let data;
+    let calculoInteres;
+    let calculoPrima;
+    let calculoBonista;
+    let calculoEmisor;
+    let bonista = [];
+    /* */
     for (let i = 0; i <= totalTiempo; i++) {
       if (i == 0) {
-        this.rowData.push({ nominal: this.valorNominal });
-      }
+        calculoBonista =
+          -parseFloat(this.valorNominal) * (parseFloat(this.gastoB) / 100 + 1);
+        data = [{ nominal: this.valorNominal, cuotaB: calculoBonista }];
+        bonista.push(calculoBonista);
+        calculoEmisor =
+          parseFloat(this.valorNominal) * (1 - parseFloat(this.gastoE) / 100);
+        data = [
+          {
+            nominal: this.valorNominal,
+            cuotaB: calculoBonista,
+            cuotaE: calculoEmisor,
+          },
+        ];
+      } /**/ else if (i < totalTiempo) {
+        calculoInteres =
+          (parseFloat(this.TEPb) * parseFloat(this.valorNominal)) / 100;
+        calculoInteres = parseFloat(calculoInteres).toFixed(2);
 
-      this.gridApi.applyTransaction({ add: this.rowData });
+        data = [
+          {
+            nominal: this.valorNominal,
+            interes: calculoInteres,
+            periodoGracia: 'S',
+            cuotaB: calculoInteres,
+            cuotaE: -calculoInteres,
+          },
+        ];
+      } else if (i == totalTiempo) {
+        calculoPrima =
+          (parseFloat(this.primaRedencion) * parseFloat(this.valorNominal)) /
+          100;
+        calculoPrima = parseFloat(calculoPrima).toFixed(2);
+
+        data = [
+          {
+            nominal: this.valorNominal,
+            interes: calculoInteres,
+            periodoGracia: 'S',
+            prima: calculoPrima,
+            cuotaB:
+              parseFloat(this.valorNominal) +
+              parseFloat(calculoPrima) +
+              parseFloat(calculoInteres),
+          },
+        ];
+      }
+      this.gridApi.applyTransaction({ add: data });
     }
     // this.rowData.push({});
   }
+
   onGridReady(params) {
     this.gridApi = params.api;
   }
