@@ -25,18 +25,24 @@
           >
         </div>
         <input
-          #tasaCupon
+          #tasaBono
           type="text"
           class="form-control"
-          (blur)="getTasaCupon(tasaCupon.value)"
+          (blur)="getTasaBono(tasaBono.value)"
         />
-        <select class="custom-select custom-select-sm col-3">
+        <select
+          class="custom-select custom-select-sm col-3"
+          (change)="getTasaTipoBono($event.target.value)"
+        >
           <option selected></option>
           <option value="1">TEA</option>
           <option value="2">TNA</option>
         </select>
       </div>
-      <select class="custom-select custom-select-sm col-2">
+      <select
+        class="custom-select custom-select-sm col-2"
+        (change)="getFrecuencia($event.target.value)"
+      >
         <option selected>Frecuencia</option>
         <option value="12">Mensual</option>
         <option value="6">Bimestral</option>
@@ -70,8 +76,11 @@
           class="form-control col-3"
           (blur)="getTasaMercado(tasaMercado.value)"
         />
-        <select class="custom-select custom-select-sm col-3">
-          <option selected></option>
+        <select
+          class="custom-select custom-select-sm col-3"
+          (change)="getTasaTipoMercado($event.target.value)"
+        >
+          <option selected value="-1"></option>
           <option value="1">TEA</option>
           <option value="2">TNA</option>
         </select>
@@ -145,8 +154,8 @@
 
       <select
         id="metodo"
-        onselect="getMetodo"
         class="custom-select custom-select-sm col-2"
+        (change)="getMetodo($event.target.value)"
       >
         <option selected>Metodo</option>
         <option>Americano</option>
@@ -189,6 +198,7 @@
       [rowData]="rowData"
       [columnDefs]="columnDefs"
       [defaultColDef]="defaultColDef"
+      (gridReady)="onGridReady($event)"
     >
     </ag-grid-angular>
   </div>
