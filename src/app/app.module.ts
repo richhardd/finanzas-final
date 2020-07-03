@@ -5,13 +5,13 @@ import { AppComponent } from './app.component';
 import {} from '../../node_modules/node-irr';
 import {} from '../../node_modules/formula-pmt';
 import {} from '../../node_modules/node-finance';
-import { GrillaComponent } from './grilla/grilla.component';
-import { LoginComponent } from './login/login.component';
+import { GrillaComponent } from '../app/grilla/grilla.component';
+import { LoginComponent } from '../app/login/login.component';
 
 @NgModule({
   declarations: [AppComponent, GrillaComponent, LoginComponent],
   imports: [BrowserModule, AgGridModule.withComponents([])],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent, GrillaComponent, LoginComponent],
 })
 export class AppModule {}
