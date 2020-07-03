@@ -179,11 +179,11 @@
       <li class="list-group-item">Gasto emisor</li>
     </ul>
 
-    <ul class="list-group-sm col-1">
-      <li class="list-group-item">{{ TEPb }}</li>
-      <li class="list-group-item">{{ TEPm }}</li>
-      <li class="list-group-item">{{ gastoB }}</li>
-      <li class="list-group-item">{{ gastoE }}</li>
+    <ul class="list-group-sm col-2">
+      <li class="list-group-item">{{ TEPb }}%</li>
+      <li class="list-group-item">{{ TEPm }}%</li>
+      <li class="list-group-item">{{ gastoB }}%</li>
+      <li class="list-group-item">{{ gastoE }}%</li>
     </ul>
   </div>
 
@@ -193,7 +193,7 @@
 
   <div class="row justify-content-center">
     <ag-grid-angular
-      style="width: 1000px; height: 200px;"
+      style="width: 1000px; height: 500px;"
       class="ag-theme-balham"
       [rowData]="rowData"
       [columnDefs]="columnDefs"
@@ -201,5 +201,33 @@
       (gridReady)="onGridReady($event)"
     >
     </ag-grid-angular>
+  </div>
+
+  <div class="row justify-content-start">
+    <h2>Datos importantes</h2>
+  </div>
+  <div class="row justify-content-center">
+    <h3>Bonista</h3>
+    <ul class="list-group-sm col-3">
+      <li class="list-group-item">TCE periodo bonista</li>
+      <li class="list-group-item">TCEA</li>
+      <li class="list-group-item">Valor bono</li>
+    </ul>
+
+    <ul class="list-group-sm col-2">
+      <li class="list-group-item">{{ TCEPb }}%</li>
+      <li class="list-group-item">{{ TCEAb }}%</li>
+      <li class="list-group-item">{{ bonoPrecio }}</li>
+    </ul>
+    <h3>Emisor</h3>
+    <ul class="list-group-sm col-3">
+      <li class="list-group-item">TCE periodo emisor</li>
+      <li class="list-group-item">TCEA</li>
+    </ul>
+
+    <ul class="list-group-sm col-2">
+      <li class="list-group-item">{{ TCEPe }}%</li>
+      <li class="list-group-item">{{ TCEAe }}%</li>
+    </ul>
   </div>
 </div>

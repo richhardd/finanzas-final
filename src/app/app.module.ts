@@ -2,7 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AgGridModule } from 'ag-grid-angular';
 import { AppComponent } from './app.component';
-
+import {} from '../../node_modules/node-irr';
+import {} from '../../node_modules/formula-pmt';
+import {} from '../../node_modules/node-finance';
 import { GrillaComponent } from './grilla/grilla.component';
 import { LoginComponent } from './login/login.component';
 
